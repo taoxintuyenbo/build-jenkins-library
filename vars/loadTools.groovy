@@ -1,4 +1,4 @@
-def call(String toolFile = "./tools.txt") {
+def call(String toolFile = "tools.txt") {
     if (!fileExists(toolFile)) {
         error "Tools file not found: ${toolFile}"
     }
