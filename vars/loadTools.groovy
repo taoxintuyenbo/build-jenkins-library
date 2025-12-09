@@ -1,16 +1,15 @@
-def call(String toolFile = "tools.txt") {
+def call(String toolFile = 'tools.properties') {
     if (!fileExists(toolFile)) {
-        error "Tools file not found: ${toolFile}"
+        error "Tools properties file not found: ${toolFile}"
     }
 
-    def toolsConfig = readFile(file: toolFile)
-                      .split("\n")
-                      .findAll { it.trim() && !it.startsWith("#") }
+    // Read the properties file
+    def toolsConfig = readProperties(file: toolFile)
 
-    toolsConfig.each { line ->
-        def (key, value) = line.split("=")
+    // Iterate through the keys and values in the properties file
+    toolsConfig.each { key, value ->
+        // Use the value to get the tool home
         def toolHome = tool(value.trim())
-        // Export env variable: MAVEN_HOME, JDK_HOME, SONAR_HOME...
         env["${key.trim().toUpperCase()}_HOME"] = toolHome
         echo "Loaded tool: ${key.trim()} = ${value.trim()}"
     }
