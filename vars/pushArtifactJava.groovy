@@ -7,7 +7,7 @@ def call() {
           """
         }
     }
-    if(branch.startsWith('uat')){
+    if(env.BRANCH_NAME.startsWith('uat')){
         def GIT_HASH = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
         withCredentials([string(credentialsId: "${NEXUS_CRED}", variable: 'NEXUS_ACC')]) {
           sh """curl -v -u ${NEXUS_ACC} --upload-file ${ARTIFACT_PATH} \
