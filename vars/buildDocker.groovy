@@ -1,6 +1,6 @@
 def call() {
   stage('Build Docker images'){
-    if(env.BRANCH_NAME == 'releases'){
+    if(env.BRANCH_NAME == 'release'){
       sh "docker build -t ${NEXUS_URL_DOCKER}/docker-releases:${VERSION}-${env.BRANCH_NAME} ."
     }
     if(env.BRANCH_NAME.startsWith('uat')){
